@@ -14,12 +14,12 @@ import (
 func main() {
 	log.Printf("Starting up on http://localhost:3333\n")
 	r := chi.NewRouter()
-	userManager, err := storages.NewPSQLManager()
+	dbManager, err := storages.NewPSQLManager()
 	if err != nil {
 		log.Printf("Error happened in database server marshal. Err: %s", err)
 		return
 	}
-	h, err1 := handlers.NewUser(userManager)
+	h, err1 := handlers.NewUser(dbManager)
 	if err1 != nil {
 		log.Printf("Error happened in database server marshal. Err: %s", err)
 		return

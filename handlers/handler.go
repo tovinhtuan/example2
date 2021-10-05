@@ -34,7 +34,7 @@ func (h *UserHandler) ResInformation(w http.ResponseWriter, r *http.Request) {
 		fail, _ := json.Marshal(failReq)
 		w.WriteHeader(http.StatusForbidden)
 		w.Write(fail)
-		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+		log.Printf("Error happened in JSON marshal. Err: %s", err)
 		return
 	}
 	userJson, err := json.Marshal(user)
