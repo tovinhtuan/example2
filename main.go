@@ -27,7 +27,7 @@ func main() {
 	r.Use(middleware.SetHeader("Content-Type", "application/json"))
 	r.Route("/api/me", func(r chi.Router) {
 		r.Use(h.AuthenHeader)
-		r.Get("/",h.ResInformation)
+		r.Get("/", h.ResInformation)
 	})
 	http.ListenAndServe(":3333", r)
 }

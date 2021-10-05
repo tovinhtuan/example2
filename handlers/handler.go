@@ -25,7 +25,7 @@ func NewUser(db *storages.PSQLManager) (*UserHandler, error) {
 	}, nil
 }
 
-func(h *UserHandler) ResInformation (w http.ResponseWriter, r *http.Request ){
+func (h *UserHandler) ResInformation(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	id := ctx.Value("UserID")
 	user, err := h.UserRepository.ReadUserByUserId(id.(int64))
@@ -46,12 +46,12 @@ func(h *UserHandler) ResInformation (w http.ResponseWriter, r *http.Request ){
 	w.Write(userJson)
 }
 
-func (h *UserHandler )AuthenHeader(next http.Handler) http.Handler {
+func (h *UserHandler) AuthenHeader(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		md := r.Header.Get("Authorization")
 		if md == "" {
 			failReq := FailedRequest{false, "field authorization false"}
-			fail, _:= json.Marshal(failReq)
+			fail, _ := json.Marshal(failReq)
 			w.WriteHeader(http.StatusForbidden)
 			w.Write(fail)
 			return
@@ -71,7 +71,7 @@ func (h *UserHandler )AuthenHeader(next http.Handler) http.Handler {
 			w.Write(fail)
 			return
 		}
-		ctx :=context.WithValue(r.Context(),"UserID",checkToken.UserId)
+		ctx := context.WithValue(r.Context(), "UserID", checkToken.UserId)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
